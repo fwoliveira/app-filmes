@@ -10,7 +10,7 @@ import {
 import { Button } from "../../components/Button/index";
 
 
-export default function Home() {
+export default function Home({ navigation }) {
  
 
   return (
@@ -23,7 +23,7 @@ export default function Home() {
        title="  ★ Favoritos "/>
        <Button
        title="Buscar filme"
-      //  onPress={}
+       onPress={() => navigation.navigate('SearchMovies')}
        />
     </Footer>
     </Container>

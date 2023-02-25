@@ -8,46 +8,59 @@ import {
   Container,
   Header,
   ListCard,
-  TitleCard1,
-  TitleCard2,
+  TitleCard,
+  ButtonReturn,
+  ReturnIcon
 
 } from './styles';
-import {  ScrollView } from "react-native";
+import {  ScrollView,Alert } from "react-native";
 
-var API_KEY = "?api_key=2247e13afd4b79d1f58bd84a056ced28";
+var API_KEY = "api_key=2247e13afd4b79d1f58bd84a056ced28";
 var LANGUAGE = "pt-BR";
-var COUNTRY = "BR";
 
-export default function SearchMovies() {
+
+export default function SearchMovies({navigation}) {
   const [buscar, setBuscar] = useState("");
   const [movies, setMovies] = useState([]);
-  const [moviesPopular, setMoviesPopular] = useState([]);
-  const [moviesRecommended, setMoviesRecommended] = useState([]);
+  
 
   async function handleGetMovies() {
-    const res = await api.get(
-      `search/movie${API_KEY}&language=${LANGUAGE}&region=${COUNTRY}&query=${buscar}`
-    )
-    const data = await res.data
-    setMovies(data.results)
-    setBuscar(buscar);
-  }
+    if (buscar === "") {
+      Alert.alert(
+        "Erro ao buscar",
+        "Por favor insira o nome do filme desejado."
+      );
+    } else {
+      const res = await api.get(
+        `/search/movie?${API_KEY}&language=pt-BR&region=BR&query=${buscar}`
+      );
+      const data = await res.data;
+      setMovies(data.results);
+      setBuscar(buscar);
+    }}
 
-  useEffect(() => {
-    api.get(`/movie/popular${API_KEY}&language=${LANGUAGE}&page=1`)
-        .then(response => response.data)
-        .then(data => setMoviesPopular(data.results))
+    const [moviesPopular, setMoviesPopular] = useState([]);
+  
 
-    api.get(`/movie/top_rated${API_KEY}&language=${LANGUAGE}&page=1`)
-        .then(response => response.data)
-        .then(data => setMoviesRecommended(data.results))
-}, [])
+    useEffect(() => {
+        api.get(`/movie/popular?${API_KEY}&language=${LANGUAGE}&page=1`)
+            .then(response => response.data)
+            .then(data => setMoviesPopular(data.results))
+
+
+    }, [])
 
   return (
     <Container>  
       <ScrollView
       showsVerticalScrollIndicator={false}>
+        <ButtonReturn onPress={() => navigation.navigate('Home')}>
+          <ReturnIcon
+          name='arrowleft'/>
+          </ButtonReturn>
       <Header>
+        
+        
         <Input
           placeholder="Buscar"
       
@@ -56,21 +69,20 @@ export default function SearchMovies() {
         />
         <Button title="Buscar" onPress={handleGetMovies} />
       </Header>
-    
-      <TitleCard1>Em cartaz</TitleCard1>
+      <ListCard
+        data={movies}
+        // horizontal={true}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <CardMovies data={item} />}
+      />
+      <TitleCard> Filmes Popular</TitleCard>
       <ListCard
         data={moviesPopular}
-        horizontal={true}
+        // horizontal={true}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CardMovies data={item} />}
       />
-      <TitleCard2> Recomendados</TitleCard2>
-      <ListCard
-        data={moviesRecommended}
-        horizontal={true}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <CardMovies data={item} />}
-      />
+
     </ScrollView>
     </Container>
   );
