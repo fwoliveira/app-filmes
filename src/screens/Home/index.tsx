@@ -20,7 +20,9 @@ export default function Home({ navigation }) {
       </Header>
      <Footer>
        <Button
-       title="  ★ Favoritos "/>
+       title="  ★ Favoritos "
+       onPress={() => navigation.navigate('Favorite')}
+       />
        <Button
        title="Buscar filme"
        onPress={() => navigation.navigate('SearchMovies')}
