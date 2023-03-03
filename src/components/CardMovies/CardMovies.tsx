@@ -1,35 +1,54 @@
 
 import { useState,useEffect } from "react";
 import { AlignStar, Assessment, Container, ImageMovie, StarIcon, TtileMovie, VoteAverage, Button, StarFavorite,Header,AlingHeader,Description } from "./styles";
-interface Props {
-    id: string;
-    title: string;
-    poster_path: string;
-    vote_average: number;
-    overview:string;
-}
-
 import firestore from "@react-native-firebase/firestore";
 import { Alert } from 'react-native';
 
 
-export type PropsMovies = {
+ interface Props  {
+    id: string;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+    overview:string; 
+    isActive: boolean;
+}
+
+
+
+
+
+export type PropsMovies   = {
     data: Props
+
 }
 interface PropsFavorite {
     id: string;
     title: string;
     poster_path: string;
     favorite: boolean;
+    exibirBotao:boolean;
   }
   export type MoviesProps = {
     id: string;
     title: string;
     poster_path: string;
+    vote_average: number;
+    overview:string;
+    
     
   }
 
-export function CardMovies({ data }: PropsMovies) {
+
+
+
+
+
+
+
+export function CardMovies({ data,}: PropsMovies  ) {
+
+    // const [exibirBotao, setExibirBotao] = useState(true);
     const [favorites, setFavorites] = useState(false);
 
     function AddFavorite() {
@@ -45,7 +64,7 @@ export function CardMovies({ data }: PropsMovies) {
             }
           }) as PropsFavorite[];
           console.log(data);
-          setFavorites(data[0].favorite)
+          
         })
     
         db
@@ -64,8 +83,8 @@ export function CardMovies({ data }: PropsMovies) {
             } else {
               db
                 .doc(`${data.id}`)
-                .set({ id: `${data.id}`, title: data.title, favorite: true , poster_path: data.poster_path  })
-                .then(() => console.log("Filme cadastrado com sucesso!"))
+                .set({ id: `${data.id}`, title: data.title, favorites: true , poster_path: data.poster_path,  vote_average: data.vote_average })
+                .then(() =>  Alert.alert("Filme adicionado aos favoritos"))
                 .catch((error) =>
                   console.error("Erro ao cadastrar filme: ", error)
                 );
@@ -78,6 +97,18 @@ export function CardMovies({ data }: PropsMovies) {
             )
           );
       }
+      useEffect(() => {
+        // Referência para a coleção de filmes no Firebase
+        const moviesRef = firestore().collection("movies");
+    
+        moviesRef.doc(`${data.id}`).onSnapshot((doc) => {
+          const favorite = doc.exists && doc.data()?.favorite;
+          setFavorites(favorite || false);
+        });
+      }, [`${data.id}`]);
+
+
+     
     return (
         <Container>
             
@@ -99,9 +130,9 @@ export function CardMovies({ data }: PropsMovies) {
                 onPress={AddFavorite}
                 >
                 <StarFavorite
-                name="favorite"
+                name={ "favorite" }
                 />
-            </Button>  
+            </Button> 
            
             </Assessment>  
             <TtileMovie>{data.title}</TtileMovie>

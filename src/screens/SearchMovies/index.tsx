@@ -10,10 +10,11 @@ import {
   ListCard,
   TitleCard,
   ButtonReturn,
-  ReturnIcon
+  ReturnIcon,
+  AlingInput
 
 } from './styles';
-import {  ScrollView,Alert } from "react-native";
+import {  ScrollView,Alert ,View } from "react-native";
 
 var API_KEY = "api_key=2247e13afd4b79d1f58bd84a056ced28";
 var LANGUAGE = "pt-BR";
@@ -52,15 +53,14 @@ export default function SearchMovies({navigation}) {
 
   return (
     <Container>  
-      <ScrollView
-      showsVerticalScrollIndicator={false}>
+    
         <ButtonReturn onPress={() => navigation.navigate('Home')}>
           <ReturnIcon
           name='arrowleft'/>
           </ButtonReturn>
-      <Header>
+      <Header> 
         
-        
+        <AlingInput>
         <Input
           placeholder="Buscar"
       
@@ -68,22 +68,31 @@ export default function SearchMovies({navigation}) {
           value={buscar}
         />
         <Button title="Buscar" onPress={handleGetMovies} />
+        </AlingInput>
       </Header>
+     
       <ListCard
         data={movies}
         // horizontal={true}
+        // exibirBotao={true} 
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CardMovies data={item} />}
       />
       <TitleCard> Filmes Popular</TitleCard>
       <ListCard
+      // exibirBotao={true} 
         data={moviesPopular}
         // horizontal={true}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <CardMovies data={item} />}
+      
+        
+        keyExtractor={(item,) => item.id  }
+        renderItem={ ({ item,}) =>(
+          <CardMovies data={item} 
+                          />
+        ) }
       />
 
-    </ScrollView>
+    
     </Container>
   );
 }

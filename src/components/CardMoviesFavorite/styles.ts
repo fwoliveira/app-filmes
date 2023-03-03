@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from 'react-native';
 import { Fontisto } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 export const Container = styled.View`
   width: 60%;
@@ -46,15 +47,14 @@ export const AlignStar = styled.View`
 `;
 
 export const Button = styled(TouchableOpacity)`
-    padding: 5px;
-    align-items:center;
+  
     margin-left: 50px;
 
    
 
 `
-export const StarFavorite =  styled(Fontisto)`
-  color: #eead2d;
+export const StarFavorite =  styled(MaterialIcons)`
+  color:  #B22222;
   font-size:24px
 `
 export const Header = styled.View`

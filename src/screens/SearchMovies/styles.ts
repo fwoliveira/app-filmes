@@ -13,7 +13,13 @@ export const Input = styled(TextInput).attrs(({theme}) => ({
     color: #000;
     background-color: #fff;
     border-radius:5px;
+  
     
+`;
+ 
+export const AlingInput =styled.View`
+  flex-direction:row;
+
 `;
 
 export const Container = styled.View`
@@ -25,7 +31,6 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-    flex: 1;
     flex-direction: row ;
     justify-content: space-between;
     align-items: center;
@@ -39,7 +44,8 @@ export const  TitleCard = styled.Text`
     color: #fff;
   font-size: 26px;
   font-weight: bold;
-  margin: 20px 0;
+  margin: 20px 0 0 ;
+
 `
 
 
