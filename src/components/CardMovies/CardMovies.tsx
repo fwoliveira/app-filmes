@@ -1,5 +1,5 @@
 
-import { useState,useEffect } from "react";
+import  React,{ useState,useEffect } from "react";
 import { AlignStar, Assessment, Container, ImageMovie, StarIcon, TtileMovie, VoteAverage, Button, StarFavorite,Header,AlingHeader,Description } from "./styles";
 import firestore from "@react-native-firebase/firestore";
 import { Alert } from 'react-native';
@@ -13,10 +13,6 @@ import { Alert } from 'react-native';
     overview:string; 
     isActive: boolean;
 }
-
-
-
-
 
 export type PropsMovies   = {
     data: Props
@@ -36,21 +32,9 @@ interface PropsFavorite {
     vote_average: number;
     overview:string;
     
-    
   }
-
-
-
-
-
-
-
-
 export function CardMovies({ data,}: PropsMovies  ) {
-
-    // const [exibirBotao, setExibirBotao] = useState(true);
     const [favorites, setFavorites] = useState(false);
-
     function AddFavorite() {
         const db = firestore().collection("movies");
     
@@ -76,7 +60,7 @@ export function CardMovies({ data,}: PropsMovies  ) {
               db
                 .doc(`${data.id}`)
                 .update({ favorite: false })
-                .then(() => console.log("Filme atualizado com sucesso!"))
+                .then(() =>Alert.alert("Filme ja foi adicionado aos favoritos"))
                 .catch((error) =>
                   console.error("Erro ao atualizar filme: ", error)
                 );
@@ -107,11 +91,8 @@ export function CardMovies({ data,}: PropsMovies  ) {
         });
       }, [`${data.id}`]);
 
-
-     
     return (
         <Container>
-            
           <Header>  
             <ImageMovie
                 source={{ uri: `https://image.tmdb.org/t/p/w500${data.poster_path}` }}
@@ -133,15 +114,11 @@ export function CardMovies({ data,}: PropsMovies  ) {
                 name={ "favorite" }
                 />
             </Button> 
-           
             </Assessment>  
             <TtileMovie>{data.title}</TtileMovie>
             <Description>{data.overview}</Description>
             </AlingHeader>
-            </Header>
-         
-           
-           
+            </Header> 
         </Container>
     )
 }

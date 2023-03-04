@@ -8,22 +8,17 @@ import {
   Container,
   Header,
   ListCard,
-  TitleCard,
   ButtonReturn,
   ReturnIcon,
   AlingInput
-
 } from './styles';
-import {  ScrollView,Alert ,View } from "react-native";
+import { Alert } from "react-native";
 
 var API_KEY = "api_key=2247e13afd4b79d1f58bd84a056ced28";
 var LANGUAGE = "pt-BR";
-
-
 export default function SearchMovies({navigation}) {
   const [buscar, setBuscar] = useState("");
   const [movies, setMovies] = useState([]);
-  
 
   async function handleGetMovies() {
     if (buscar === "") {
@@ -40,59 +35,27 @@ export default function SearchMovies({navigation}) {
       setBuscar(buscar);
     }}
 
-    const [moviesPopular, setMoviesPopular] = useState([]);
-  
-
-    useEffect(() => {
-        api.get(`/movie/popular?${API_KEY}&language=${LANGUAGE}&page=1`)
-            .then(response => response.data)
-            .then(data => setMoviesPopular(data.results))
-
-
-    }, [])
-
   return (
     <Container>  
-    
         <ButtonReturn onPress={() => navigation.navigate('Home')}>
           <ReturnIcon
           name='arrowleft'/>
           </ButtonReturn>
       <Header> 
-        
         <AlingInput>
         <Input
           placeholder="Buscar"
-      
           onChangeText={setBuscar}
           value={buscar}
         />
         <Button title="Buscar" onPress={handleGetMovies} />
         </AlingInput>
       </Header>
-     
       <ListCard
         data={movies}
-        // horizontal={true}
-        // exibirBotao={true} 
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CardMovies data={item} />}
       />
-      <TitleCard> Filmes Popular</TitleCard>
-      <ListCard
-      // exibirBotao={true} 
-        data={moviesPopular}
-        // horizontal={true}
-      
-        
-        keyExtractor={(item,) => item.id  }
-        renderItem={ ({ item,}) =>(
-          <CardMovies data={item} 
-                          />
-        ) }
-      />
-
-    
     </Container>
   );
 }

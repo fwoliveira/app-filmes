@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from 'react-native';
-import { Fontisto } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
 
 export const Container = styled.View`
   width: 60%;
@@ -18,27 +19,24 @@ export const ImageMovie = styled.Image`
 
 export const TtileMovie = styled.Text`
   color: #fff;
-  font-size: 18px;
+  font-size: ${RFValue(18)}px;
   font-weight: bold;
-  /* text-align: center; */
   margin-top: 10px;
 `;
 
 export const Assessment = styled.View`
-  /* align-items: center; */
-  
   flex-direction: row;
   margin-top: 10px;
 `;
 
 export const VoteAverage = styled.Text`
-  font-size: 16px;
+  font-size: ${RFValue(16)}px;
   color: #fff;
 `;
 
 export const StarIcon = styled(AntDesign)`
   align-items: center;
-  font-size: 20px;
+  font-size: ${RFValue(20)}px;
   color: #eead2d;
 `;
 
@@ -47,11 +45,7 @@ export const AlignStar = styled.View`
 `;
 
 export const Button = styled(TouchableOpacity)`
-  
     margin-left: 50px;
-
-   
-
 `
 export const StarFavorite =  styled(MaterialIcons)`
   color:  #B22222;
@@ -62,7 +56,6 @@ export const Header = styled.View`
 `
 export const AlingHeader = styled.View`
    margin-left: 15px;
-
 `
 
 export const Description = styled.Text`
