@@ -17,7 +17,11 @@
       "image": "./assets/splash.png",
       "backgroundColor": "#120B20",
       "resizeMode": "cover"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dd491f26-2f0c-4679-8c08-99e6b3b811f1"
+      }
     }
-    
   }
 }
